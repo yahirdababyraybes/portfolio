@@ -5,22 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yahir Hernandez's Website</title>
     <style>
+      /* Light Mode Styles (Default) */
       body { 
         font-family: Arial, sans-serif; 
         max-width: 800px;
         margin: 0 auto; 
         padding: 20px; 
+        background: #f5f5f5; 
+        color: #333333;
+        transition: background 0.3s, color 0.3s;
+      }
+      h1   { color: #1F4E79; }
+      h2   { color: #2E75B6; border-bottom: 2px solid #2E75B6; }
+      p    { line-height: 1.6; }
+      a    { color: #0066cc; text-decoration: none; font-weight: bold; }
+      a:hover { text-decoration: underline; }
+
+      /* Dark Mode Override Styles */
+      body.dark-mode {
         background: #121212; 
         color: #e0e0e0;
       }
-      h1   { color: #4FA3E3; }
-      h2   { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
-      p    { line-height: 1.6; }
-      a    { color: #FF9F43; text-decoration: none; font-weight: bold; }
-      a:hover { text-decoration: underline; color: #FFB366; }
+      body.dark-mode h1 { color: #4FA3E3; }
+      body.dark-mode h2 { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
+      body.dark-mode a { color: #FF9F43; }
+      body.dark-mode a:hover { color: #FFB366; }
+
+      /* Toggle Button Styling */
+      .theme-btn {
+        background-color: #333333;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+        float: right;
+      }
+      body.dark-mode .theme-btn {
+        background-color: #ffffff;
+        color: #333333;
+      }
     </style>
   </head>
   <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark Mode</button>
+
     <h1>Hi, I'm Yahir Hernandez!</h1>
  
     <h2>About Me</h2>
@@ -34,12 +66,30 @@
 
     <h2>My Projects</h2>
     <p>Check out my Code.org App: 
-      <a href="https://studio.code.org/projects/applab/464ceb7f-9c7b-40f1-afcd-4525d374a99a" target="_blank">View My App Lab Project</a>
+      <a href="https://code.org" target="_blank">View My App Lab Project</a>
     </p>
  
     <h2>My GitHub</h2>
     <p>Check out my code: 
-      <a href="https://github.com/yahirdababyraybes" target="_blank">yahirdababyraybes</a>
+      <a href="https://github.com" target="_blank">yahirdababyraybes</a>
     </p>
+
+    <!-- JavaScript to Handle the Toggle functionality -->
+    <script>
+      function toggleTheme() {
+        var body = document.body;
+        var btn = document.getElementById("themeBtn");
+        
+        // Toggle the dark-mode class on the body
+        body.classList.toggle("dark-mode");
+        
+        // Update the button text based on the active mode
+        if (body.classList.contains("dark-mode")) {
+          btn.innerText = "Light Mode";
+        } else {
+          btn.innerText = "Dark Mode";
+        }
+      }
+    </script>
   </body>
 </html>
