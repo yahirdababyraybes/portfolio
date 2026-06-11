@@ -21,6 +21,34 @@
       a    { color: #0066cc; text-decoration: none; font-weight: bold; }
       a:hover { text-decoration: underline; }
 
+      /* Countdown Container Layout */
+      .countdown-container {
+        display: flex;
+        gap: 15px;
+        margin: 20px 0;
+      }
+      .time-box {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        min-width: 70px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e0e0e0;
+      }
+      .time-num {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1F4E79;
+        display: block;
+      }
+      .time-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #666666;
+        letter-spacing: 1px;
+      }
+
       /* Dark Mode Override Styles */
       body.dark-mode {
         background: #121212; 
@@ -30,6 +58,15 @@
       body.dark-mode h2 { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
       body.dark-mode a { color: #FF9F43; }
       body.dark-mode a:hover { color: #FFB366; }
+      
+      /* Dark Mode Countdown Styles */
+      body.dark-mode .time-box {
+        background: #1e1e1e;
+        border-color: #333333;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      body.dark-mode .time-num { color: #4FA3E3; }
+      body.dark-mode .time-label { color: #aaaaaa; }
 
       /* Toggle Button Styling */
       .theme-btn {
@@ -57,6 +94,27 @@
  
     <h2>About Me</h2>
     <p>I like to play volleyball, I have 5 siblings, and I am Mexican.</p>
+
+    <!-- Countdown Timer Section -->
+    <h2>Countdown to My Birthday! 🎂</h2>
+    <div class="countdown-container">
+      <div class="time-box">
+        <span class="time-num" id="days">00</span>
+        <span class="time-label">Days</span>
+      </div>
+      <div class="time-box">
+        <span class="time-num" id="hours">00</span>
+        <span class="time-label">Hours</span>
+      </div>
+      <div class="time-box">
+        <span class="time-num" id="minutes">00</span>
+        <span class="time-label">Mins</span>
+      </div>
+      <div class="time-box">
+        <span class="time-num" id="seconds">00</span>
+        <span class="time-label">Secs</span>
+      </div>
+    </div>
  
     <h2>My Interests</h2>
     <p>I enjoy playing volleyball, playing video games, and love hanging out with friends or loved ones.</p>
@@ -74,22 +132,53 @@
       <a href="https://github.com" target="_blank">yahirdababyraybes</a>
     </p>
 
-    <!-- JavaScript to Handle the Toggle functionality -->
+    <!-- JavaScript for Theme Toggle and Birthday Timer -->
     <script>
+      // 1. Theme Toggle Function
       function toggleTheme() {
         var body = document.body;
         var btn = document.getElementById("themeBtn");
         
-        // Toggle the dark-mode class on the body
         body.classList.toggle("dark-mode");
         
-        // Update the button text based on the active mode
         if (body.classList.contains("dark-mode")) {
           btn.innerText = "Light Mode";
         } else {
           btn.innerText = "Dark Mode";
         }
       }
+
+      // 2. Birthday Countdown Logic
+      function updateCountdown() {
+        const currentYear = new Date().getFullYear();
+        // Set birthday target date (June 18)
+        let birthdayTarget = new Date(`June 18, ${currentYear} 00:00:00`).getTime();
+        let now = new Date().getTime();
+        let difference = birthdayTarget - now;
+
+        // If June 18 has already passed this year, count down to next year's June 18
+        if (difference < 0) {
+          birthdayTarget = new Date(`June 18, ${currentYear + 1} 00:00:00`).getTime();
+          difference = birthdayTarget - now;
+        }
+
+        // Time calculations for days, hours, minutes, and seconds
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Add a leading zero if numbers are single digits (e.g., "05" instead of "5")
+        document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+        document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+        document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+        document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+      }
+
+      // Run the countdown every 1 second
+      setInterval(updateCountdown, 1000);
+      // Run it once immediately so there is no delay on page load
+      updateCountdown();
     </script>
   </body>
 </html>
