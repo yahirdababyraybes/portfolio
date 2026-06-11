@@ -15,14 +15,28 @@
         color: #333333;
         transition: background 0.3s, color 0.3s;
         position: relative;
-        /* Green soccer field themed top border */
-        border-top: 8px solid #2ecc71; 
+        border-top: 8px solid #2ecc71; /* Soccer field green */
+        overflow-x: hidden;
       }
       h1   { color: #1F4E79; }
       h2   { color: #2E75B6; border-bottom: 2px solid #2E75B6; }
       p    { line-height: 1.6; }
       a    { color: #0066cc; text-decoration: none; font-weight: bold; }
       a:hover { text-decoration: underline; }
+
+      /* Custom Soccer Ball Cursor Tracking */
+      .custom-cursor {
+        width: 24px;
+        height: 24px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+        font-size: 24px;
+        transform: translate(-50%, -50%);
+        transition: transform 0.05s linear;
+      }
 
       /* Countdown Container Layout */
       .countdown-container {
@@ -52,7 +66,7 @@
         letter-spacing: 1px;
       }
 
-      /* Video Container for responsive layout */
+      /* Responsive Videos Layout */
       .video-wrapper {
         position: relative;
         padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -71,24 +85,13 @@
         height: 100%;
       }
 
-      /* Floating Soccer Ball Decorations */
+      /* Bouncing Soccer Ball Decorations */
       .soccer-decoration {
         position: fixed;
-        font-size: 30px;
-        opacity: 0.25;
-        z-index: -1; /* Keeps them behind your text */
-        pointer-events: none; /* Stops them from blocking clicks */
-        animation: floatAround 8s ease-in-out infinite alternate;
-      }
-      /* Placing the balls in the corners of the screen */
-      .ball1 { top: 10%; left: 5%; }
-      .ball2 { top: 15%; right: 5%; animation-delay: 2s; }
-      .ball3 { bottom: 15%; left: 8%; animation-delay: 4s; }
-      .ball4 { bottom: 20%; right: 7%; animation-delay: 1s; }
-
-      @keyframes floatAround {
-        0% { transform: translateY(0px) rotate(0deg); }
-        100% { transform: translateY(-20px) rotate(360deg); }
+        font-size: 35px;
+        opacity: 0.2;
+        z-index: -1;
+        pointer-events: none;
       }
 
       /* Dark Mode Override Styles */
@@ -131,11 +134,12 @@
     </style>
   </head>
   <body>
-    <!-- Floating Soccer Decorations Background -->
-    <div class="soccer-decoration ball1">⚽</div>
-    <div class="soccer-decoration ball2">⚽</div>
-    <div class="soccer-decoration ball3">⚽</div>
-    <div class="soccer-decoration ball4">⚽</div>
+    <!-- Custom Follower Cursor -->
+    <div class="custom-cursor" id="customCursor">⚽</div>
+
+    <!-- Bouncing Balls Elements -->
+    <div class="soccer-decoration" id="ball1">⚽</div>
+    <div class="soccer-decoration" id="ball2">⚽</div>
 
     <!-- Theme Toggle Button -->
     <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark Mode</button>
@@ -172,9 +176,16 @@
     <h2>My Goals for This Course</h2>
     <p>How to make a website</p>
 
+    <!-- Volleyball Section -->
+    <h2>Volleyball Highlights 🏐</h2>
+    <p>Check out some of the craziest spikes, saves, and plays in professional volleyball history:</p>
+    <div class="video-wrapper">
+      <iframe src="https://youtube.com" title="Volleyball Highlights" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
     <!-- Cristiano Ronaldo Section -->
     <h2>CR7's Greatest Goal 👑</h2>
-    <p>Watch Cristiano Ronaldo's unbelievable 40-yard Puskás Award-winning strike against FC Porto:</p>
+    <p>Watch Cristiano Ronaldo's unbelievable Puskás Award-winning strike against FC Porto:</p>
     <div class="video-wrapper">
       <iframe src="https://youtube.com" title="Cristiano Ronaldo Porto Goal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
@@ -189,15 +200,13 @@
       <a href="https://github.com" target="_blank">yahirdababyraybes</a>
     </p>
 
-    <!-- JavaScript for Theme Toggle and Birthday Timer -->
+    <!-- All Interactive JavaScript Logic -->
     <script>
       // 1. Theme Toggle Function
       function toggleTheme() {
         var body = document.body;
         var btn = document.getElementById("themeBtn");
-        
         body.classList.toggle("dark-mode");
-        
         if (body.classList.contains("dark-mode")) {
           btn.innerText = "Light Mode";
         } else {
@@ -227,9 +236,45 @@
         document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
         document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
       }
-
       setInterval(updateCountdown, 1000);
       updateCountdown();
+
+      // 3. Custom Cursor Tracking Logic
+      const cursor = document.getElementById('customCursor');
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+
+      // 4. Bouncing Balls Physics Logic
+      function createBouncingBall(id, speedX, speedY) {
+        const ball = document.getElementById(id);
+        let x = Math.random() * (window.innerWidth - 50);
+        let y = Math.random() * (window.innerHeight - 50);
+
+        function move() {
+          x += speedX;
+          y += speedY;
+
+          // Check wall collisions (width)
+          if (x + 40 >= window.innerWidth || x <= 0) {
+            speedX = -speedX;
+          }
+          // Check wall collisions (height)
+          if (y + 40 >= window.innerHeight || y <= 0) {
+            speedY = -speedY;
+          }
+
+          ball.style.left = x + 'px';
+          ball.style.top = y + 'px';
+          requestAnimationFrame(move);
+        }
+        move();
+      }
+      // Start bouncing animations with unique velocities
+      createBouncingBall('ball1', 2.5, 2);
+      createBouncingBall('ball2', -2, 3);
     </script>
   </body>
 </html>
+
