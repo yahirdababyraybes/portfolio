@@ -14,6 +14,9 @@
         background: #f5f5f5; 
         color: #333333;
         transition: background 0.3s, color 0.3s;
+        position: relative;
+        /* Green soccer field themed top border */
+        border-top: 8px solid #2ecc71; 
       }
       h1   { color: #1F4E79; }
       h2   { color: #2E75B6; border-bottom: 2px solid #2E75B6; }
@@ -49,15 +52,56 @@
         letter-spacing: 1px;
       }
 
+      /* Video Container for responsive layout */
+      .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        margin: 20px 0;
+        border: 3px solid #2E75B6;
+      }
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Floating Soccer Ball Decorations */
+      .soccer-decoration {
+        position: fixed;
+        font-size: 30px;
+        opacity: 0.25;
+        z-index: -1; /* Keeps them behind your text */
+        pointer-events: none; /* Stops them from blocking clicks */
+        animation: floatAround 8s ease-in-out infinite alternate;
+      }
+      /* Placing the balls in the corners of the screen */
+      .ball1 { top: 10%; left: 5%; }
+      .ball2 { top: 15%; right: 5%; animation-delay: 2s; }
+      .ball3 { bottom: 15%; left: 8%; animation-delay: 4s; }
+      .ball4 { bottom: 20%; right: 7%; animation-delay: 1s; }
+
+      @keyframes floatAround {
+        0% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(-20px) rotate(360deg); }
+      }
+
       /* Dark Mode Override Styles */
       body.dark-mode {
         background: #121212; 
         color: #e0e0e0;
+        border-top-color: #27ae60;
       }
       body.dark-mode h1 { color: #4FA3E3; }
       body.dark-mode h2 { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
       body.dark-mode a { color: #FF9F43; }
       body.dark-mode a:hover { color: #FFB366; }
+      body.dark-mode .video-wrapper { border-color: #6BA4E8; }
       
       /* Dark Mode Countdown Styles */
       body.dark-mode .time-box {
@@ -87,6 +131,12 @@
     </style>
   </head>
   <body>
+    <!-- Floating Soccer Decorations Background -->
+    <div class="soccer-decoration ball1">⚽</div>
+    <div class="soccer-decoration ball2">⚽</div>
+    <div class="soccer-decoration ball3">⚽</div>
+    <div class="soccer-decoration ball4">⚽</div>
+
     <!-- Theme Toggle Button -->
     <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark Mode</button>
 
@@ -122,6 +172,13 @@
     <h2>My Goals for This Course</h2>
     <p>How to make a website</p>
 
+    <!-- Cristiano Ronaldo Section -->
+    <h2>CR7's Greatest Goal 👑</h2>
+    <p>Watch Cristiano Ronaldo's unbelievable 40-yard Puskás Award-winning strike against FC Porto:</p>
+    <div class="video-wrapper">
+      <iframe src="https://youtube.com" title="Cristiano Ronaldo Porto Goal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
     <h2>My Projects</h2>
     <p>Check out my Code.org App: 
       <a href="https://code.org" target="_blank">View My App Lab Project</a>
@@ -151,33 +208,27 @@
       // 2. Birthday Countdown Logic
       function updateCountdown() {
         const currentYear = new Date().getFullYear();
-        // Set birthday target date (June 18)
         let birthdayTarget = new Date(`June 18, ${currentYear} 00:00:00`).getTime();
         let now = new Date().getTime();
         let difference = birthdayTarget - now;
 
-        // If June 18 has already passed this year, count down to next year's June 18
         if (difference < 0) {
           birthdayTarget = new Date(`June 18, ${currentYear + 1} 00:00:00`).getTime();
           difference = birthdayTarget - now;
         }
 
-        // Time calculations for days, hours, minutes, and seconds
         const d = Math.floor(difference / (1000 * 60 * 60 * 24));
         const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-        // Add a leading zero if numbers are single digits (e.g., "05" instead of "5")
         document.getElementById("days").innerText = d < 10 ? "0" + d : d;
         document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
         document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
         document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
       }
 
-      // Run the countdown every 1 second
       setInterval(updateCountdown, 1000);
-      // Run it once immediately so there is no delay on page load
       updateCountdown();
     </script>
   </body>
