@@ -94,6 +94,22 @@
         pointer-events: none;
       }
 
+      /* Mini Goku Sprite Styling */
+      .goku-sprite {
+        position: fixed;
+        bottom: 20px;
+        left: 0px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #ff6600; /* Goku's iconic orange Gi */
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.8); /* Glowing Super Saiyan Aura */
+        z-index: 1000;
+        pointer-events: none;
+        white-space: nowrap;
+        font-family: monospace;
+        transition: transform 0.1s;
+      }
+
       /* Dark Mode Override Styles */
       body.dark-mode {
         background: #121212; 
@@ -140,6 +156,9 @@
     <!-- Bouncing Balls Elements -->
     <div class="soccer-decoration" id="ball1">⚽</div>
     <div class="soccer-decoration" id="ball2">⚽</div>
+
+    <!-- Mini Goku Character -->
+    <div class="goku-sprite" id="goku">🧡└[⚡]┐</div>
 
     <!-- Theme Toggle Button -->
     <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark Mode</button>
@@ -256,14 +275,8 @@
           x += speedX;
           y += speedY;
 
-          // Check wall collisions (width)
-          if (x + 40 >= window.innerWidth || x <= 0) {
-            speedX = -speedX;
-          }
-          // Check wall collisions (height)
-          if (y + 40 >= window.innerHeight || y <= 0) {
-            speedY = -speedY;
-          }
+          if (x + 40 >= window.innerWidth || x <= 0) speedX = -speedX;
+          if (y + 40 >= window.innerHeight || y <= 0) speedY = -speedY;
 
           ball.style.left = x + 'px';
           ball.style.top = y + 'px';
@@ -271,10 +284,23 @@
         }
         move();
       }
-      // Start bouncing animations with unique velocities
       createBouncingBall('ball1', 2.5, 2);
       createBouncingBall('ball2', -2, 3);
-    </script>
-  </body>
-</html>
+
+      // 5. Goku Side-to-Side Walking Logic
+      const goku = document.getElementById('goku');
+      let gokuX = 0;
+      let gokuSpeed = 2; // Speed of pacing
+
+      function moveGoku() {
+        gokuX += gokuSpeed;
+        
+        // Check right boundary collision
+        if (gokuX + 120 >= window.innerWidth) {
+          gokuSpeed = -2;
+          goku.style.transform = "scaleX(-1)"; // Turn around left
+        }
+        // Check left boundary collision
+        if (gokuX <= 0) {
+
 
