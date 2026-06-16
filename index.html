@@ -66,25 +66,6 @@
         letter-spacing: 1px;
       }
 
-      /* Responsive Videos Layout */
-      .video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-        height: 0;
-        overflow: hidden;
-        border-radius: 12px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        margin: 20px 0;
-        border: 3px solid #2E75B6;
-      }
-      .video-wrapper iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-
       /* Bouncing Soccer Ball Decorations */
       .soccer-decoration {
         position: fixed;
@@ -120,7 +101,6 @@
       body.dark-mode h2 { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
       body.dark-mode a { color: #FF9F43; }
       body.dark-mode a:hover { color: #FFB366; }
-      body.dark-mode .video-wrapper { border-color: #6BA4E8; }
       
       /* Dark Mode Countdown Styles */
       body.dark-mode .time-box {
@@ -195,22 +175,6 @@
     <h2>My Goals for This Course</h2>
     <p>How to make a website</p>
 
-    <!-- Volleyball Section -->
-    <h2>Volleyball Highlights 🏐</h2>
-    <p>Check out some of the craziest spikes, saves, and plays in professional volleyball history:</p>
-    <div class="video-wrapper">
-      <!-- FIXED: Changed URL to a working embed link -->
-      <iframe src="https://youtube.com" title="Volleyball Highlights" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-
-    <!-- Cristiano Ronaldo Section -->
-    <h2>CR7's Greatest Goal 👑</h2>
-    <p>Watch Cristiano Ronaldo's unbelievable Puskás Award-winning strike against FC Porto:</p>
-    <div class="video-wrapper">
-      <!-- FIXED: Changed URL to a working embed link -->
-      <iframe src="https://youtube.com" title="Cristiano Ronaldo Porto Goal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    </div>
-
     <h2>My Projects</h2>
     <p>Check out my Code.org App: 
       <a href="https://code.org" target="_blank">View My App Lab Project</a>
@@ -252,24 +216,23 @@
         const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-        // FIXED: Closed out the incomplete innerText statements properly
         document.getElementById("days").innerText = d < 10 ? "0" + d : d;
         document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
         document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
         document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
       }
       
-      // Start countdown loop
+      // Run the countdown loops immediately
       setInterval(updateCountdown, 1000);
       updateCountdown();
 
-      // 3. Custom Soccer Ball Cursor Tracking
+      // Custom Soccer Ball Cursor Tracking
       const cursor = document.getElementById("customCursor");
       document.addEventListener("mousemove", (e) => {
         cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
       });
 
-      // 4. Goku Sprite Running Across Screen Animation
+      // Goku Sprite Running Across Screen Animation
       const goku = document.getElementById("goku");
       let gokuPos = 0;
       let gokuDirection = 1;
@@ -277,17 +240,17 @@
         gokuPos += 2 * gokuDirection;
         if (gokuPos > window.innerWidth) {
           gokuDirection = -1;
-          goku.style.transform = "scaleX(-1)"; // Face left
+          goku.style.transform = "scaleX(-1)"; // Flips image to face left
         } else if (gokuPos < -50) {
           gokuDirection = 1;
-          goku.style.transform = "scaleX(1)"; // Face right
+          goku.style.transform = "scaleX(1)";  // Flips image to face right
         }
         goku.style.left = gokuPos + "px";
         requestAnimationFrame(moveGoku);
       }
       moveGoku();
 
-      // 5. Ambient Bouncing Soccer Balls
+      // Ambient Bouncing Soccer Balls
       function setupBouncingBall(id) {
         const ball = document.getElementById(id);
         let x = Math.random() * window.innerWidth;
@@ -299,3 +262,15 @@
           x += dx;
           y += dy;
           if (x < 0 || x > window.innerWidth - 40) dx = -dx;
+          if (y < 0 || y > window.innerHeight - 40) dy = -dy;
+          ball.style.left = x + "px";
+          ball.style.top = y + "px";
+          requestAnimationFrame(bounce);
+        }
+        bounce();
+      }
+      setupBouncingBall("ball1");
+      setupBouncingBall("ball2");
+    </script>
+  </body>
+</html>
