@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yahir Hernandez's Website</title>
-    <!-- Imported Modern Google Fonts (Poppins for Headings, Inter for Body Text) -->
+    <!-- IMPORTED ARCADE & FUTURISTIC GAMING FONTS -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Orbitron:wght@600;800&family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
       /* Light Mode Styles (Default) */
       body { 
-        font-family: 'Inter', system-ui, -apple-system, sans-serif; /* Cleaner body font */
+        font-family: 'Inter', system-ui, -apple-system, sans-serif; 
         max-width: 800px;
         margin: 0 auto; 
         padding: 20px; 
@@ -24,18 +24,22 @@
         overflow-x: hidden;
       }
       h1 { 
-        font-family: 'Poppins', sans-serif; /* Modern bold font for main title */
-        font-weight: 700;
+        font-family: 'Press Start 2P', monospace; /* 8-Bit Pixel Font */
+        font-size: 1.6rem;
+        line-height: 1.4;
         color: #1F4E79; 
-        letter-spacing: -0.5px;
+        text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        margin-top: 40px;
       }
       h2 { 
-        font-family: 'Poppins', sans-serif; /* Modern bold font for subtitles */
-        font-weight: 600;
+        font-family: 'Orbitron', sans-serif; /* Futuristic Gaming Font */
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
         color: #2E75B6; 
-        border-bottom: 2px solid #2E75B6; 
-        padding-bottom: 5px;
-        letter-spacing: -0.3px;
+        border-bottom: 3px dashed #2E75B6; 
+        padding-bottom: 8px;
+        margin-top: 40px;
       }
       p { 
         line-height: 1.7; 
@@ -69,27 +73,29 @@
         display: flex;
         gap: 15px;
         margin: 20px 0;
+        flex-wrap: wrap;
       }
       .time-box {
         background: #ffffff;
         padding: 15px;
         border-radius: 8px;
-        min-width: 70px;
+        min-width: 85px;
         text-align: center;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e0e0e0;
+        border: 2px solid #e0e0e0;
       }
       .time-num {
-        font-family: 'Poppins', sans-serif; /* Geometric numbers for countdown alignment */
-        font-weight: 700;
-        font-size: 2.2rem;
+        font-family: 'Press Start 2P', monospace; /* Pixel font for scoreboard look */
+        font-size: 1.4rem;
         color: #1F4E79;
         display: block;
-        line-height: 1.1;
+        line-height: 1.2;
+        margin-bottom: 8px;
       }
       .time-label {
+        font-family: 'Orbitron', sans-serif;
         font-size: 0.75rem;
-        font-weight: 600;
+        font-weight: 800;
         text-transform: uppercase;
         color: #666666;
         letter-spacing: 1px;
@@ -126,8 +132,8 @@
         color: #e0e0e0;
         border-top-color: #27ae60;
       }
-      body.dark-mode h1 { color: #4FA3E3; }
-      body.dark-mode h2 { color: #6BA4E8; border-bottom: 2px solid #6BA4E8; }
+      body.dark-mode h1 { color: #4FA3E3; text-shadow: 2px 2px 0px rgba(0,0,0,0.5); }
+      body.dark-mode h2 { color: #6BA4E8; border-bottom-style: dashed; border-bottom-color: #6BA4E8; }
       body.dark-mode a { color: #FF9F43; }
       body.dark-mode a:hover { color: #FFB366; }
       
@@ -142,20 +148,25 @@
 
       /* Toggle Button Styling */
       .theme-btn {
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
+        font-family: 'Press Start 2P', monospace; /* Pixel font for arcade button look */
+        font-size: 10px;
         background-color: #333333;
         color: #ffffff;
-        border: none;
-        padding: 10px 15px;
-        font-size: 14px;
+        border: 2px solid #555;
+        padding: 10px 12px;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 4px;
         float: right;
+        box-shadow: 2px 2px 0px #000;
+      }
+      .theme-btn:active {
+        box-shadow: 0px 0px 0px #000;
+        transform: translate(2px, 2px);
       }
       body.dark-mode .theme-btn {
         background-color: #ffffff;
         color: #333333;
+        border-color: #ccc;
       }
     </style>
   </head>
@@ -171,7 +182,7 @@
     <div class="goku-sprite" id="goku">🧡└[⚡]┐</div>
 
     <!-- Theme Toggle Button -->
-    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">Dark Mode</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">DARK MODE</button>
 
     <h1>Hi, I'm Yahir Hernandez!</h1>
  
@@ -223,9 +234,9 @@
         var btn = document.getElementById("themeBtn");
         body.classList.toggle("dark-mode");
         if (body.classList.contains("dark-mode")) {
-          btn.innerText = "Light Mode";
+          btn.innerText = "LIGHT MODE";
         } else {
-          btn.innerText = "Dark Mode";
+          btn.innerText = "DARK MODE";
         }
       }
 
@@ -295,12 +306,3 @@
           if (y < 0 || y > window.innerHeight - 40) dy = -dy;
           ball.style.left = x + "px";
           ball.style.top = y + "px";
-          requestAnimationFrame(bounce);
-        }
-        bounce();
-      }
-      setupBouncingBall("ball1");
-      setupBouncingBall("ball2");
-    </script>
-  </body>
-</html>
