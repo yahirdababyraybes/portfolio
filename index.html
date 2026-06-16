@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yahir Hernandez's Website</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- IMPORTED ARCADE & FUTURISTIC GAMING FONTS -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Orbitron:wght@600;800&family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
       /* Light Mode Styles (Default) */
@@ -256,7 +257,6 @@
         const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-        // FIXED: Fully completed the innerText injection strings
         document.getElementById("days").innerText = d < 10 ? "0" + d : d;
         document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
         document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
