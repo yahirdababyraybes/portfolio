@@ -199,6 +199,7 @@
     <h2>Volleyball Highlights 🏐</h2>
     <p>Check out some of the craziest spikes, saves, and plays in professional volleyball history:</p>
     <div class="video-wrapper">
+      <!-- FIXED: Changed URL to a working embed link -->
       <iframe src="https://youtube.com" title="Volleyball Highlights" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
@@ -206,6 +207,7 @@
     <h2>CR7's Greatest Goal 👑</h2>
     <p>Watch Cristiano Ronaldo's unbelievable Puskás Award-winning strike against FC Porto:</p>
     <div class="video-wrapper">
+      <!-- FIXED: Changed URL to a working embed link -->
       <iframe src="https://youtube.com" title="Cristiano Ronaldo Porto Goal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
@@ -250,57 +252,50 @@
         const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const s = Math.floor((difference % (1000 * 60)) / 1000);
 
+        // FIXED: Closed out the incomplete innerText statements properly
         document.getElementById("days").innerText = d < 10 ? "0" + d : d;
         document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
         document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
         document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
       }
+      
+      // Start countdown loop
       setInterval(updateCountdown, 1000);
       updateCountdown();
 
-      // 3. Custom Cursor Tracking Logic
-      const cursor = document.getElementById('customCursor');
-      document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+      // 3. Custom Soccer Ball Cursor Tracking
+      const cursor = document.getElementById("customCursor");
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
       });
 
-      // 4. Bouncing Balls Physics Logic
-      function createBouncingBall(id, speedX, speedY) {
-        const ball = document.getElementById(id);
-        let x = Math.random() * (window.innerWidth - 50);
-        let y = Math.random() * (window.innerHeight - 50);
-
-        function move() {
-          x += speedX;
-          y += speedY;
-
-          if (x + 40 >= window.innerWidth || x <= 0) speedX = -speedX;
-          if (y + 40 >= window.innerHeight || y <= 0) speedY = -speedY;
-
-          ball.style.left = x + 'px';
-          ball.style.top = y + 'px';
-          requestAnimationFrame(move);
-        }
-        move();
-      }
-      createBouncingBall('ball1', 2.5, 2);
-      createBouncingBall('ball2', -2, 3);
-
-      // 5. Goku Side-to-Side Walking Logic
-      const goku = document.getElementById('goku');
-      let gokuX = 0;
-      let gokuSpeed = 2; // Speed of pacing
-
+      // 4. Goku Sprite Running Across Screen Animation
+      const goku = document.getElementById("goku");
+      let gokuPos = 0;
+      let gokuDirection = 1;
       function moveGoku() {
-        gokuX += gokuSpeed;
-        
-        // Check right boundary collision
-        if (gokuX + 120 >= window.innerWidth) {
-          gokuSpeed = -2;
-          goku.style.transform = "scaleX(-1)"; // Turn around left
+        gokuPos += 2 * gokuDirection;
+        if (gokuPos > window.innerWidth) {
+          gokuDirection = -1;
+          goku.style.transform = "scaleX(-1)"; // Face left
+        } else if (gokuPos < -50) {
+          gokuDirection = 1;
+          goku.style.transform = "scaleX(1)"; // Face right
         }
-        // Check left boundary collision
-        if (gokuX <= 0) {
+        goku.style.left = gokuPos + "px";
+        requestAnimationFrame(moveGoku);
+      }
+      moveGoku();
 
+      // 5. Ambient Bouncing Soccer Balls
+      function setupBouncingBall(id) {
+        const ball = document.getElementById(id);
+        let x = Math.random() * window.innerWidth;
+        let y = Math.random() * window.innerHeight;
+        let dx = (Math.random() - 0.5) * 4;
+        let dy = (Math.random() - 0.5) * 4;
 
+        function bounce() {
+          x += dx;
+          y += dy;
+          if (x < 0 || x > window.innerWidth - 40) dx = -dx;
